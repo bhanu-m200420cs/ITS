@@ -1,0 +1,117 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Items</h1>
+
+<table class="table table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>Item name</th>
+      <th>Model number</th>
+      <th>Make</th>
+      <th>Lab</th>
+      <th>Installation date</th>
+      <th>Type of Purchase</th>
+      <th>Warranty</th>
+      <th>Status</th>
+      <th>Complaint Description</th>
+      <!-- <th>Incharge ID</th> -->
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if current_incharge.user? %>
+      <% @items.each do |item| %>
+       <% if item.approved? %>
+        <tr>
+          <td><%= item.item_name %></td>
+          <td><%= item.model_number %></td>
+          <td><%= item.make %></td>
+          <td><%= item.lab_name %></td>
+          <td><%= item.installation_date %></td>
+          <td><%= item.typeofpurchase%></td>
+          <td><%= item.warranty %></td>
+          <td><%= item.status %></td>
+          <% if item.complaint? %>
+          <td class="text-danger"><%= item.description %></td>
+          <% else %>
+          <td><%= item.description %></td>
+          <% end %>
+          <!-- <td><%= item.incharge.email %></td> -->
+          <% if item.complaint == false %>
+          <td><a href="items/<%= item.id %>/complain" class="btn btn-dark">File Complaint</a></td>
+          <% else %>
+            <td class="text-danger"><strong>Complaint filed</strong></td>
+          <% end %>
+
+        </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% if current_incharge.admin? %>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.item_name %></td>
+        <td><%= item.model_number %></td>
+        <td><%= item.make %></td>
+        <td><%= item.lab_name %></td>
+        <td><%= item.installation_date %></td>
+        <td><%= item.typeofpurchase%></td>
+        <td><%= item.warranty %></td>
+        <td><%= item.status %></td>
+        <% if item.complaint? %>
+        <td class="text-danger"><%= item.description %></td>
+        <% else %>
+        <td><%= item.description %></td>
+        <% end %>
+        <!-- <td><%= item.incharge.email %></td> -->
+        <% if item.approved == false %>
+        <td><%= link_to 'Approve', item, method: :Patch, class:"btn btn-dark" %></td>
+        <% else %>
+        <% if item.approved == true %>
+        <td><%= link_to 'Disapprove', item, method: :Patch, data: { confirm: 'Are you sure?' }, class:"btn btn-dark"%></td>
+        <% end %>
+        <% end %>
+      </tr>
+      <% end %>
+    <% else %>
+    <% @items.each do |item| %>
+    <% if current_incharge == item.incharge %>
+      <tr>
+        <td><%= item.item_name %></td>
+        <td><%= item.model_number %></td>
+        <td><%= item.make %></td>
+        <td><%= item.lab_name %></td>
+        <td><%= item.installation_date %></td>
+        <td><%= item.typeofpurchase%></td>
+        <td><%= item.warranty %></td>
+        <td><%= item.status %></td>
+        <% if item.complaint? %>
+        <td class="text-danger"><%= item.description %></td>
+        <% else %>
+        <td><%= item.description %></td>
+        <% end %>
+
+        <!-- <td><%= item.incharge.email %></td> -->
+        <td><%= link_to 'Show', item, class:"btn btn-dark" %></td>
+        <td><%= link_to 'Edit', edit_item_path(item), class:"btn btn-dark" %></td>
+        <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-dark"%></td>
+        <% if item.complaint == true %>
+          <td><a href="items/<%= item.id %>/complain" class="btn btn-dark">Resolve Complaint</a></td>
+            <%= item.update_attribute(:status, 'Working') %>
+            <%= item.update_attribute(:complaint, false) %>
+          <% else %>
+          <td class="text-danger"><strong>No Complaints</strong></td>
+        <% end %>
+      </tr>
+      <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if current_incharge.admin? %>
+<%= link_to "Generate Approved List", "items.csv", class: "btn btn-primary"%>
+<% end %>

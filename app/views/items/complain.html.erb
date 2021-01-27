@@ -1,0 +1,30 @@
+<% if current_incharge.user? %>
+<h1> File Complaint </h1>
+<form action="complain/<%= @item.id %>" method="post">
+	<input type="hidden" name="_method" value="patch">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<div class="form-group">
+		<label>Description:</label>
+		<input type="text" name="item[description]" value="<%= @item.description %>" class="form-control">
+	</div>
+	<div class="form-group"> 
+	<input type="submit" value="File Complaint" class="btn btn-dark">
+	</div>
+</form>
+
+<% else %>
+
+<h1> Report Complaint Status </h1>
+<form action="complain/<%= @item.id %>" method="post">
+	<input type="hidden" name="_method" value="patch">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<div class="form-group">
+		<label>Description:</label>
+		<input type="text" name="item[description]" value="<%= @item.description %>" class="form-control">
+	</div>
+	<div class="form-group"> 
+	<input type="submit" value="Update" class="btn btn-dark">
+	</div>
+</form>
+
+<% end %>

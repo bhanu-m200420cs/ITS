@@ -1,0 +1,24 @@
+<% if incharge_signed_in? %>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<div class="jumbotron m-3">
+  <h1 class="display-4"> <%= @item.item_name %> (<%= @item.make %>  <%= @item.model_number %>)</h1>
+  <p class="lead"><strong>Installation date:- </strong> <%= @item.installation_date %></p>
+  <p class="lead"><strong>Type of Purchase:- </strong> <%= @item.typeofpurchase %></p>
+  <p class="lead"><strong>Lab Name:- </strong> <%= @item.lab_name %></p>
+  <p class="lead"><strong>Warranty Expires on:- </strong> <%= @item.warranty %></p>
+  <% if @item.status == "Working" %>
+    <p class="lead"><strong><%= @item.item_name %> is Working fine</strong></p>
+  <% else %>
+    <p class="lead"><strong><%= @item.item_name %> is not Working</strong></p>
+  <% end %>
+  <hr class="my-4">
+</div>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<p id="notice"><%= notice %></p>
+<%= link_to 'Edit', edit_item_path(@item), class:"btn btn-secondary" %> 
+<%= link_to 'Back', items_path, class:"btn btn-secondary" %>
+<% else %>
+	<%= render 'layouts/static_landing_page' %>
+<% end %>

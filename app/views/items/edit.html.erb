@@ -1,0 +1,10 @@
+<% if incharge_signed_in? %>
+<h1>Editing Item</h1>
+
+<%= render 'form', item: @item %>
+
+<%= link_to 'Show', @item, class:"btn btn-secondary" %> |
+<%= link_to 'Back', items_path, class:"btn btn-secondary" %>
+<% else %>
+	<%= render 'layouts/static_landing_page' %>
+<% end %>

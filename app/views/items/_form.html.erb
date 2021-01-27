@@ -1,0 +1,62 @@
+<%= form_with(model: item, local: true) do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field form-group">
+    <%= form.label :item_name %>
+    <%= form.text_field :item_name, class:"form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :model_number %>
+    <%= form.text_field :model_number, class:"form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :make %>
+    <%= form.text_field :make, class:"form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :lab_name %>
+    <%= form.text_field :lab_name, class:"form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :installation_date %>
+    <%= form.date_select :installation_date, class:"form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :typeofpurchase %>
+    <%= form.text_field :typeofpurchase, class:"form-control" %>
+  </div>
+
+
+  <div class="field form-group">
+    <%= form.label :warranty %>
+    <%= form.date_select :warranty, class:"datepicker" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :status %>
+    <%= form.text_field :status, class:"form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.number_field :incharge_id, id: :item_incharge_id, value: current_incharge.id, class:"form-control", type: :hidden %>
+  </div>
+  <div class="actions">
+    <%= form.submit class:"btn btn-secondary" %>
+  </div>
+<% end %>
